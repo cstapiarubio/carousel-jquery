@@ -6,20 +6,18 @@ $(function() {
 	 	var pb = {};
 	 	pb.el = $('#slider');
 	 	pb.items = {
-	 		panels: pb.el.find('li'),
+	 		panel: pb.el.find('li'),
 	 	}
 
 	 	// Interval del Slider
 	 	var SliderInterval,
 	 		currentSlider = 0,
 	 		nextSlider = 1,
-	 		lengthSlider = pb.items.panels.length;
+	 		lengthSlider = pb.items.panel.length;
 
 	 	// Constructor del Slider
 	 	pb.init = function(settings) {
-	 		this.settings = settings || {duration: 6000}
-	 		/*var items = this.items,
-	 			lengthPanels = items.panels.length,*/
+	 		this.settings = settings || {duration: 8000}
 	 			 var output = '';
 
 	 // Activamos nuestro Slider
@@ -33,8 +31,6 @@ $(function() {
 	 				output += '<li></li>';
 	 			}
 	 		}
-
-	 		/*$('#slider-controls').html(output);*/
 
 	 		
 	 		// Eventos para los controles
@@ -63,8 +59,8 @@ $(function() {
 	 		}
 
 	 		controls.removeClass('active').eq(currentSlider).addClass('active');
-	 		items.panels.eq(currentSlider).fadeOut('slow');
-	 		items.panels.eq(nextSlider).fadeIn('slow');
+	 		panels.eq(currentSlider).fadeOut('slow');
+	 		panels.eq(nextSlider).fadeIn('slow');
 
 	 		// Actualizamos los datos del slider
 	 		currentSlider = nextSlider;
@@ -72,23 +68,26 @@ $(function() {
 	 	}
 
 	 	// Funcion para Cambiar de Panel con Los Controles
-	 	pb.startSlider = function() {
+	 	var changePanel = function(id) {
 	 		clearInterval(SliderInterval);
 	 		var panels = pb.items.panel,
 	 			controls = $('#slider-controls li');
 	 		// Comprobamos si el ID esta disponible entre los paneles
-	 		if(nextSlider >= lengthSlider) {
-	 			nextSlider = 0;
-	 			currentSlider = lengthSlider-1;
+	 		if(id >= lengthSlider) {
+	 			id = 0;
+	 		}
+	 			else if(id<0){
+
+	 			id = lengthSlider-1;
 	 		}
 
-	 		controls.removeClass('active').eq(currentSlider).addClass('active');
+	 		controls.removeClass('active').eq(id).addClass('active');
 	 		panels.eq(currentSlider).fadeOut('slow');
-	 		panels.eq(nextSlider).fadeIn('slow');
+	 		panels.eq(id).fadeIn('slow');
 
 	 		// Volvemos a actualizar los datos del slider
-	 		currentSlider = nextSlider;
-	 		nextSlider +=1;
+	 		currentSlider = id;
+	 		nextSlider = id+1;
 	 		// Reactivamos nuestro slider
 	 		activateSlider();
 	 	}
