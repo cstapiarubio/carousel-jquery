@@ -6,7 +6,7 @@ $(function() {
 	 	var pb = {};
 	 	pb.el = $('#slider');
 	 	pb.items = {
-	 		panels: pb.el.find('.slider-wrapper > li'),
+	 		panels: pb.el.find('li'),
 	 	}
 
 	 	// Interval del Slider
@@ -23,7 +23,7 @@ $(function() {
 	 			output = '';
 
 	 		// Insertamos nuestros botones
-	 		for(var i = 0; i < lengthPanels; i++) {
+	 		for(var i = 0; i < lengthSlider; i++) {
 	 			if(i == 0) {
 	 				output += '<li class="active"></li>';
 	 			} else {
@@ -31,14 +31,14 @@ $(function() {
 	 			}
 	 		}
 
-	 		$('#slider-controls').html(output);
+	 		/*$('#slider-controls').html(output);*/
 
 	 		// Activamos nuestro Slider
 	 		activateSlider();
 	 		// Eventos para los controles
-	 		$('#slider-controls').on('click', 'li', function(e) {
+	 		$('#slider-controls').html(output).on('click', 'li', function(e) {
 	 			var $this = $(this);
-	 			if(!(currentSlider === $this.index())) {
+	 			if(currentSlider !== $this.index()) {
 	 				changePanel($this.index());
 	 			}
 	 		});
@@ -52,7 +52,7 @@ $(function() {
 
 	 	// Funcion para la Animacion
 	 	pb.startSlider = function() {
-	 		var items = pb.items,
+	 		var items = pb.items.panel,
 	 			controls = $('#slider-controls li');
 	 		// Comprobamos si es el ultimo panel para reiniciar el conteo
 	 		if(nextSlider >= lengthSlider) {
@@ -60,7 +60,7 @@ $(function() {
 	 			currentSlider = lengthSlider-1;
 	 		}
 
-	 		controls.removeClass('active').eq(nextSlider).addClass('active');
+	 		controls.removeClass('active').eq(currentSlider).addClass('active');
 	 		items.panels.eq(currentSlider).fadeOut('slow');
 	 		items.panels.eq(nextSlider).fadeIn('slow');
 
