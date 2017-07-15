@@ -17,10 +17,13 @@ $(function() {
 
 	 	// Constructor del Slider
 	 	pb.init = function(settings) {
-	 		this.settings = settings || {duration: 8000};
-	 		var items = this.items,
-	 			lengthPanels = items.panels.length,
-	 			output = '';
+	 		this.settings = settings || {duration: 6000}
+	 		/*var items = this.items,
+	 			lengthPanels = items.panels.length,*/
+	 			 var output = '';
+
+	 // Activamos nuestro Slider
+	 		activateSlider();
 
 	 		// Insertamos nuestros botones
 	 		for(var i = 0; i < lengthSlider; i++) {
@@ -33,26 +36,25 @@ $(function() {
 
 	 		/*$('#slider-controls').html(output);*/
 
-	 		// Activamos nuestro Slider
-	 		activateSlider();
+	 		
 	 		// Eventos para los controles
 	 		$('#slider-controls').html(output).on('click', 'li', function(e) {
 	 			var $this = $(this);
 	 			if(currentSlider !== $this.index()) {
 	 				changePanel($this.index());
-	 			}
+	 			};
 	 		});
 
 	 	}
 
 	 	// Funcion para activar el Slider
 	 	var activateSlider = function() {
-	 		SliderInterval = setInterval(pb.startSlider, pb.settings.duration);
+	 		SliderInterval = setInterval(pb.startSlider, 6000);
 	 	}
 
 	 	// Funcion para la Animacion
 	 	pb.startSlider = function() {
-	 		var items = pb.items.panel,
+	 		var panels = pb.items.panel,
 	 			controls = $('#slider-controls li');
 	 		// Comprobamos si es el ultimo panel para reiniciar el conteo
 	 		if(nextSlider >= lengthSlider) {
@@ -70,24 +72,23 @@ $(function() {
 	 	}
 
 	 	// Funcion para Cambiar de Panel con Los Controles
-	 	var changePanel = function(id) {
+	 	pb.startSlider = function() {
 	 		clearInterval(SliderInterval);
-	 		var items = pb.items,
+	 		var panels = pb.items.panel,
 	 			controls = $('#slider-controls li');
 	 		// Comprobamos si el ID esta disponible entre los paneles
-	 		if(id >= lengthSlider) {
-	 			id = 0;
-	 		} else if(id < 0) {
-	 			id = lengthSlider-1;
+	 		if(nextSlider >= lengthSlider) {
+	 			nextSlider = 0;
+	 			currentSlider = lengthSlider-1;
 	 		}
 
-	 		controls.removeClass('active').eq(id).addClass('active');
+	 		controls.removeClass('active').eq(currentSlider).addClass('active');
 	 		panels.eq(currentSlider).fadeOut('slow');
-	 		panels.eq(id).fadeIn('slow');
+	 		panels.eq(nextSlider).fadeIn('slow');
 
 	 		// Volvemos a actualizar los datos del slider
-	 		currentSlider = id;
-	 		nextSlider = id+1;
+	 		currentSlider = nextSlider;
+	 		nextSlider +=1;
 	 		// Reactivamos nuestro slider
 	 		activateSlider();
 	 	}
