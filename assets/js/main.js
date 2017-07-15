@@ -73,7 +73,7 @@ $(function() {
 	 	var changePanel = function(id) {
 	 		clearInterval(SliderInterval);
 	 		var items = pb.items,
-	 			controls = $('#slider-controls');
+	 			controls = $('#slider-controls li');
 	 		// Comprobamos si el ID esta disponible entre los paneles
 	 		if(id >= lengthSlider) {
 	 			id = 0;
@@ -82,8 +82,8 @@ $(function() {
 	 		}
 
 	 		controls.removeClass('active').eq(id).addClass('active');
-	 		items.panels.eq(currentSlider).fadeOut('slow');
-	 		items.panels.eq(id).fadeIn('slow');
+	 		panels.eq(currentSlider).fadeOut('slow');
+	 		panels.eq(id).fadeIn('slow');
 
 	 		// Volvemos a actualizar los datos del slider
 	 		currentSlider = id;
@@ -95,6 +95,6 @@ $(function() {
 		return pb;
 	 }());
 
-	 SliderModule.init({duration: 4000});
+	 SliderModule.init({duration: 2000});
 
 });
